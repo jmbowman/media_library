@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#id_username').focus();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<h2>Login</h2>
+<p>Welcome to the 50 Broadway media library.  Please log in to view or update
+the library inventory.</p>
+<br />
+<form method="post" action="{% url login %}">
+{% csrf_token %}
+<table>
+{{ form.as_table }}
+<tr><td colspan="2" align="right"><input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" /></td></tr>
+</table>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+[
+  {
+    "pk": 1, 
+    "model": "sites.site", 
+    "fields": {
+      "domain": "localhost:8000", 
+      "name": "domain.com"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "admin",
+      "first_name": "System",
+      "last_name": "Administrator",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "groups": [],
+      "user_permissions": [],
+      "password": "sha1$daeef$b9316fbd982203b43c8948e2dae97f40e98e78e7",
+      "email": "username@domain.com"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "username": "somebody",
+      "first_name": "Normal",
+      "last_name": "User",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": [],
+      "password": "sha1$6a5c0$973c74f3024a976be93548b4b271e9aae66b53c7",
+      "email": "somebody@domain.com"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "Blu-ray"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "Book"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "CD"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "Comic Book"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "DVD"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "LD"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "Manga (en)"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "Manga (ja)"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "PS2"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "PS3"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "library.mediatype",
+    "fields": {
+      "name": "VHS"
+    }
+  }
+]

@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+
+{% block title %}Media List{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="/static/css/data_table.css" />
+<script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/js/scripts.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#media_list').dataTable({
+        bJQueryUI: true,
+        iDisplayLength: {{ row_count }},
+        sPaginationType: 'full_numbers'
+    });
+    $('#owner-selection, #type-selection').change(function() {
+        $('#main_form').submit();
+    });
+    $('select[name="media_list_length"]').change(function() {
+        $.post('{% url row-count-pref %}', {'rows': $(this).val()});
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<form id="main_form" action="{% url media-list %}" method="post">{% csrf_token %}
+<div id="list-controls">
+  <div id="add-item"><input type="button" value="Add an item" onclick="document.location = '{% url media-add %}';" /></div>
+  <div id="filters">
+    <div id="owner-selection"><strong>Owner:</strong> <select name="owner_filter">
+      <option value="">All</option>
+      {% for owner in owners %}
+      <option value="{{ owner.id }}"{% if owner_filter and owner == owner_filter %} selected="selected"{% endif %}>{{ owner.first_name }}</option>
+      {% endfor %}
+    </select></div>
+    <div id="type-selection"><strong>Media type:</strong> <select name="type_filter">
+      <option value="">All</option>
+      {% for type in types %}
+      <option value="{{ type.id }}"{% if type_filter and type == type_filter %} selected="selected"{% endif %}>{{ type }}</option>
+      {% endfor %}
+    </select></div>
+  </div>
+</div>
+<br />
+{% if media_items %}
+<table id="media_list" class="display" cellpadding="0" cellspacing="0" border="0">
+<thead>
+<tr>
+<th>Title</th>
+<th>Type</th>
+<th>Owners</th>
+</tr>
+</thead>
+<tbody>
+{% for item in media_items %}
+<tr>
+<td><a href="{% url media-edit item.id %}">{{ item.title }}</a></td>
+<td class="nowrap">{{ item.type }}</td>
+<td>{% for owner in item.sorted_owners.all %}{% if not forloop.first %}, {% endif %}{{ owner.first_name }}{% endfor %}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+<p>No items in the library match the selected filters.</p>
+{% endif %}
+</form>
+{% endblock %}

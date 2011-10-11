@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+{% load uni_form_tags %}
+
+{% block title %}{% if object %}Edit{% else %}Add{% endif %} Media Item{% endblock %}
+
+{% block scripts %}
+{% uni_form_setup %}
+<link rel="stylesheet" href="/static/css/jquery.multiselect2side.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/static/js/jquery.multiselect2side.js" ></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#id_owners option').each(function() {
+        var text = $(this).text()
+        $(this).text(text.charAt(0).toUpperCase() + text.substr(1));
+    });
+    $("#id_owners").multiselect2side({moveOptions: false, autoSort: true, autoSortAvailable: true});
+    $('#id_title').focus();
+    {% if object %}
+    $('#button-id-delete').click(function() {
+        document.location = '{% url media-delete object.id %}';
+    });
+    {% endif %}
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h2>{% if object %}Edit{% else %}Add{% endif %} Media Item</h2>
+
+{% uni_form form form.helper %}
+{% endblock %}

@@ -1,0 +1,6 @@
+This is a simple Django application I created to keep track of Blu-ray discs
+and such owned among my group of friends so we can coordinate purchases and
+know whom to ask to borrow things.  It assumes that things like users and media
+types are configured either in a JSON file to be imported or directly in the
+database or admin interface.  If I have time, I'll come back to it to add a
+few features and make it a little more admin-friendly.

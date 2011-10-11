@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+{% load uni_form_tags %}
+
+{% block title %}Delete Media Item{% endblock %}
+
+{% block scripts %}
+{% uni_form_setup %}
+{% endblock %}
+
+{% block content %}
+
+<h2>Delete Media Item</h2>
+
+<p>Delete "{{ object }}"?</p>
+<form action="{% url media-delete object.id %}" method="post" class="uniForm">{% csrf_token %}
+<div class="buttonHolder">
+<input type="submit" value="Delete" class="primaryAction" />
+</div>
+</form>
+{% endblock %}

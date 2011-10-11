@@ -1,0 +1,70 @@
+{% load library_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+  <title>{% block title %}{% endblock %} - Media Library</title>
+  <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/overcast/jquery-ui.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/static/css/styles.css" media="screen" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+  {% block styles %}{# additional page level styles #}{% endblock %}
+  {% block scripts %}{% endblock %}
+</head>
+<body>
+
+<div id="page">
+
+<div id="actions">
+<ul>
+{% if user.is_authenticated %}
+<li>Hello {{ user.first_name }}!</li>
+<li><a href="{% url password %}">Change Password</a></li> 
+<li><a href="{% url logout %}">Logout</a></li>
+{% endif %}
+</ul>
+</div>
+
+<div id="header">
+<h1><a href="{% url media-list %}">{% main_title %}</a></h1>
+<h2>{% sub_title %}</h2>
+</div>
+
+<div id="wrapper">
+
+<div id="content">
+{% block content %}
+{% endblock %}
+</div>
+
+<div id="sidebar"> 
+
+{% recently_added %}
+
+<h2>Useful Links</h2>
+
+<ul>
+<li><a href="http://www.amazon.com/">Amazon</a></li>
+<li><a href="http://www.amazon.co.jp/">Amazon.co.jp</a></li>
+<li><a href="http://www.cdjapan.co.jp/">CD Japan</a></li>
+<li><a href="http://www.deepdiscount.com/">Deep Discount</a></li>
+<li><a href="http://dvdplanet.com/">DVD Planet</a></li>
+<li><a href="http://dvdpricesearch.com/">DVD Price Search</a></li>
+<li><a href="http://www.google.com/prdhp?hl=en&amp;tab=wf">Google Shopping</a></li>
+<li><a href="http://www.rightstuf.com/">Right Stuf</a></li>
+</ul>
+
+</div>
+
+<div style="clear: both;"> </div>
+
+</div>
+
+<div id="footer">
+<p>
+Coded by Jeremy Bowman using <a href="https://www.djangoproject.com/">Django</a>
+</p>
+</div>
+
+</div>
+</body>
