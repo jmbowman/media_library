@@ -3,6 +3,10 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
+
 ADMINS = (
     ('Full Name', 'username@domain.com'),
 )

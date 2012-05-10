@@ -58,7 +58,7 @@ $(document).ready(function() {
 <tr>
 <td><a href="{% url media-edit item.id %}">{{ item.title }}</a></td>
 <td class="nowrap">{{ item.type }}</td>
-<td>{% for owner in item.sorted_owners.all %}{% if not forloop.first %}, {% endif %}{{ owner.first_name }}{% endfor %}</td>
+<td>{% for owner in item.sorted_owners %}{% if not forloop.first %}, {% endif %}{{ owner.first_name }}{% endfor %}</td>
 </tr>
 {% endfor %}
 </tbody>

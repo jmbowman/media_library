@@ -35,7 +35,7 @@ class Media(models.Model):
 
     def sorted_owners(self):
         """List the item's owners in alphabetical order by first name."""
-        return self.owners.order_by('first_name')
+        return sorted(self.owners.all(), key=lambda o: o.first_name)
 
     @models.permalink
     def get_absolute_url(self):

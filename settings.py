@@ -25,6 +25,9 @@ USE_I18N = False
 # calendars according to the current locale
 USE_L10N = False
 
+# Use the new support for timezones in Django 1.4
+USE_TZ = True
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.dirname(__file__) + '/files/'
@@ -33,11 +36,6 @@ MEDIA_ROOT = os.path.dirname(__file__) + '/files/'
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/files/'
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
 
 LOGIN_URL = '/login/'
 
@@ -58,10 +56,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'urls'
 
 # URL for static media files
 STATIC_URL = '/static/'
@@ -81,6 +80,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -89,9 +89,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'uni_form',
     'library',
-    'debug_toolbar'
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'debug_toolbar',
 )
 
 # Directories outside of individual apps in which static files are found

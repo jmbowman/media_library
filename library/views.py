@@ -63,7 +63,8 @@ def media_list(request):
     if owner_filter:
         media = media.filter(owners__id=owner_filter.id)
         context['owner_filter'] = owner_filter
-    context['media_items'] = media.order_by('title')
+    media = media.order_by('title').prefetch_related('owners', 'type')
+    context['media_items'] = media
     context['row_count'] = session.get('row_count', 25)
     return render_to_response('library/media_list.html', context,
                               context_instance=RequestContext(request))

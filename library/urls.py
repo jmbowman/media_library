@@ -8,7 +8,7 @@ URL mapping for the library application.
 
 """
 
-from django.conf.urls.defaults import patterns
+from django.conf.urls import patterns
 from django.contrib.auth.decorators import login_required
 
 from library.views import MediaCreateView, MediaDeleteView, MediaUpdateView
