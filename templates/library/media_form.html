@@ -5,8 +5,8 @@
 
 {% block scripts %}
 {% uni_form_setup %}
-<link rel="stylesheet" href="/static/css/jquery.multiselect2side.css" type="text/css" media="screen" />
-<script type="text/javascript" src="/static/js/jquery.multiselect2side.js" ></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.multiselect2side.css" type="text/css" media="screen" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.multiselect2side.js" ></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#id_owners option').each(function() {

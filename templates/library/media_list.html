@@ -3,9 +3,9 @@
 {% block title %}Media List{% endblock %}
 
 {% block scripts %}
-<link rel="stylesheet" type="text/css" href="/static/css/data_table.css" />
-<script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/static/js/scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/data_table.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/scripts.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {

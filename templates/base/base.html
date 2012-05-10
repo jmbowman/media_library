@@ -5,7 +5,7 @@
   <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
   <title>{% block title %}{% endblock %} - Media Library</title>
   <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/overcast/jquery-ui.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="/static/css/styles.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/styles.css" media="screen" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
   {% block styles %}{# additional page level styles #}{% endblock %}

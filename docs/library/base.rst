@@ -1,0 +1,4 @@
+:mod:`library`
+==============
+
+.. automodule:: library

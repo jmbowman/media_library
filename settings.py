@@ -58,6 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'app.urls'
@@ -88,6 +89,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'uni_form',
     'library',
+    'debug_toolbar'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
 )
@@ -96,3 +98,15 @@ INSTALLED_APPS = (
 STATICFILES_DIRS = (
     os.path.dirname(__file__) + '/static/',
 )
+
+# destination path for static media files on file server
+STATIC_ROOT = '/local/static/library/static/'
+
+# Needed for django-debug-toolbar
+INTERNAL_IPS = ('127.0.0.1',)
+
+# Finally, grab local settings from your local settings
+try:
+    from local_settings import *
+except ImportError:
+    pass
