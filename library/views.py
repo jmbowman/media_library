@@ -11,9 +11,11 @@ View functions for the library application.
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import django.utils.simplejson as json
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -35,7 +37,6 @@ def media_list(request):
     types = MediaType.objects.order_by('name')
     owners = User.objects.order_by('first_name')
     session = request.session
-    media = Media.objects
     type_filter = None
     owner_filter = None
     if request.method == 'POST':
@@ -58,16 +59,72 @@ def media_list(request):
             owner_filter = User.objects.get(pk=session.get('owner_filter'))
     context = {'types': types, 'owners': owners}
     if type_filter:
-        media = media.filter(type=type_filter)
         context['type_filter'] = type_filter
     if owner_filter:
-        media = media.filter(owners__id=owner_filter.id)
         context['owner_filter'] = owner_filter
-    media = media.order_by('title').prefetch_related('owners', 'type')
-    context['media_items'] = media
     context['row_count'] = session.get('row_count', 25)
     return render_to_response('library/media_list.html', context,
                               context_instance=RequestContext(request))
+
+
+@login_required
+def grid_data(request):
+    """Handle requests from the DataTables widget for data to display."""
+    get = request.GET
+    media = Media.objects
+    session = request.session
+
+    # selected filters
+    if 'type_filter' in session:
+        media = media.filter(type__id=session.get('type_filter'))
+    if 'owner_filter' in session:
+        media = media.filter(owners__id=session.get('owner_filter'))
+
+    # search box
+    if 'sSearch' in get:
+        term = get['sSearch']
+        if term:
+            media = media.filter(Q(title__icontains=term) |
+                                 Q(type__name__icontains=term) |
+                                 Q(owners__first_name__icontains=term))
+            media = media.distinct()
+    filtered = media
+
+    # sorting
+    columns = ['title', 'type__name']
+    sort_count = max(int(get.get('iSortingCols', 0)), 0)
+    sort_cols = []
+    for i in range(sort_count):
+        key = 'iSortCol_{0}'.format(i)
+        if not key in get:
+            break
+        entry = columns[int(get[key])]
+        if get.get('sSortDir_{0}'.format(i), 'asc') == 'desc':
+            entry = '-' + entry
+        sort_cols.append(entry)
+    if sort_cols:
+        media = media.order_by(*sort_cols)
+
+    # paging
+    if 'iDisplayStart' in get and 'iDisplayLength' in get:
+        start = max(int(get['iDisplayStart']), 0)
+        end = start + min(int(get['iDisplayLength']), 100)
+        media = media[start:end]
+
+    media = media.prefetch_related('owners', 'type')
+    aaData = [['<a href="{0}">{1}</a>'.format(reverse('media-edit',
+                                                      args=[item.id]),
+                                              item.title),
+               item.type.name,
+               ', '.join([u.first_name for u in item.sorted_owners()])] \
+              for item in media]
+    context = {
+        'aaData': aaData,
+        'iTotalDisplayRecords': filtered.count(),
+        'iTotalRecords': Media.objects.count(),
+        'sEcho': int(get.get('sEcho', 0)),
+    }
+    return HttpResponse(json.dumps(context))
 
 
 class MediaCreateView(CreateView):

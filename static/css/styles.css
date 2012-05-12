@@ -204,7 +204,7 @@ padding: 10px 0 5px 10px;
     float: right;
 }
 
-td.nowrap {
+#media_list td.type {
     white-space: nowrap;
 }
 
